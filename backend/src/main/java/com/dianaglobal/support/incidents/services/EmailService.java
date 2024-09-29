@@ -8,10 +8,9 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @Service
 public class EmailService {
@@ -22,6 +21,7 @@ public class EmailService {
     @Autowired
     private JavaMailSender emailSender;
 
+    @Transactional
     public EmailModel sendEmail(EmailModel emailModel) {
         emailModel.setSendDataEmail(LocalDateTime.now());
         try {
@@ -37,11 +37,6 @@ public class EmailService {
         catch (MailException e) {
             emailModel.setStatusEmail(StatusEmail.ERROR);
 
-            Logger logger = Logger.getLogger(EmailService.class.getName());
-            logger.log(Level.SEVERE, "Failed to send email: {0}", e.getMessage());
-
-            // Optionally, print the stack trace for debugging
-            e.printStackTrace();
         } finally {
             return emailRepository.save(emailModel);
         }
