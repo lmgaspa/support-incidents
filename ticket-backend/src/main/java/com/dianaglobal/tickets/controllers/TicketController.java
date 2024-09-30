@@ -1,6 +1,6 @@
 package com.dianaglobal.tickets.controllers;
 
-import com.dianaglobal.tickets.configs.RabbitMQConfig;
+import com.dianaglobal.tickets.dtos.EmailDto;
 import com.dianaglobal.tickets.dtos.TicketDto;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +16,19 @@ public class TicketController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @PostMapping("/sending-ticket")
-    public ResponseEntity<String> sendIncident(@RequestBody TicketDto ticketDto) {
+    @PostMapping("/send-ticket")
+    public ResponseEntity<String> sendTicket(@RequestBody TicketDto ticketDto) {
+        EmailDto emailDto = new EmailDto();
+        emailDto.setOwnerRef(ticketDto.getUser());
+        emailDto.setCompany(ticketDto.getCompany());
+        emailDto.setProblem(ticketDto.getProblem());
+        emailDto.setPriority(ticketDto.getPriority());
+        emailDto.setEmailTo(ticketDto.getEmailTo());
+        emailDto.setSubject("Support Ticket: " + ticketDto.getProblem());
+        emailDto.setText(ticketDto.getDescription());
 
-        rabbitTemplate.convertAndSend(RabbitMQConfig.QUEUE_NAME, ticketDto);
-        return new ResponseEntity<>("Incident sent to RabbitMQ", HttpStatus.OK);
+        rabbitTemplate.convertAndSend("incident_queue", emailDto);
+
+        return new ResponseEntity<>("Ticket information sent to RabbitMQ", HttpStatus.OK);
     }
 }

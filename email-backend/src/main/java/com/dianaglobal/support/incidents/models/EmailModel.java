@@ -25,4 +25,8 @@ public class EmailModel implements Serializable {
     private String text;
     private LocalDateTime sendDataEmail;
     private StatusEmail statusEmail;
+
+    private String company;
+    private String problem;
+    private String priority;
 }

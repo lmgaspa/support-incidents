@@ -29,7 +29,14 @@ public class EmailService {
             message.setFrom(emailModel.getEmailFrom());
             message.setTo(emailModel.getEmailTo());
             message.setSubject(emailModel.getSubject());
-            message.setText(emailModel.getText());
+
+            String emailBody = "User: " + emailModel.getOwnerRef() + "\n"
+                    + "Company: " + emailModel.getCompany() + "\n"
+                    + "Problem: " + emailModel.getProblem() + "\n"
+                    + "Priority: " + emailModel.getPriority() + "\n\n"
+                    + "Description: " + emailModel.getText();
+
+            message.setText(emailBody);
             emailSender.send(message);
 
             emailModel.setStatusEmail(StatusEmail.SENT);
