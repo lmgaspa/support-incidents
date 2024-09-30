@@ -60,7 +60,7 @@ export default defineComponent({
     const handleSubmit = async () => {
       if (validateForm()) {
         try {
-          const response = await fetch('/sending-email', {
+          const response = await fetch('/sending-ticket', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
