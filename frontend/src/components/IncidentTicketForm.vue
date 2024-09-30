@@ -14,8 +14,8 @@
       </div>
 
       <div class="form-group mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" v-model="ticket.email" required />
+        <label for="emailTo" class="form-label">Email</label>
+        <input type="email" class="form-control" id="emailTo" v-model="ticket.emailTo" required />
       </div>
 
       <div class="form-group mb-3">
@@ -53,17 +53,20 @@ export default defineComponent({
     const ticket = ref({
       user: '',
       company: '',
-      email: '',
+      emailTo: '',  // Nome alterado para corresponder ao DTO do backend
       problem: '',
       description: '',
       priority: 'medium',
-      status: 'open',
+      status: 'open',  // Defina o status inicial
+      subject: 'New Incident Ticket',  // Assumindo que o assunto seja fixo
+      emailFrom: 'support@dianaglobal.com',  // Endereço de envio fixo, ou pode ser dinâmico
+      text: '',  // Campo para o corpo do email (será gerado no backend)
     });
 
     const handleSubmit = async () => {
       if (validateForm()) {
         try {
-          const response = await fetch('/api/send-ticket', {
+          const response = await fetch('/sending-email', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -96,8 +99,7 @@ export default defineComponent({
         }
       }
 
-      // Verifica se o email é válido
-      if (!validateEmail(ticket.value.email)) {
+      if (!validateEmail(ticket.value.emailTo)) {
         alert('Please enter a valid email address');
         return false;
       }
@@ -112,22 +114,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-h2 {
-  font-family: 'Arial', sans-serif;
-}
-
-.form-control {
-  background-color: #fffaf3;
-  border: 1px solid #ff8c00;
-}
-
-.btn {
-  font-weight: bold;
-}
-
-.container-fluid {
-  background-color: #ffebd2;
-}
-</style>
