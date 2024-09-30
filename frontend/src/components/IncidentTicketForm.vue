@@ -37,8 +37,6 @@
         </select>
       </div>
 
-      <input type="hidden" v-model="ticket.status" />
-
       <button type="submit" class="btn btn-lg w-100" style="background-color: #48ee; color: white;">Submit Ticket</button>
     </form>
   </div>
@@ -53,14 +51,10 @@ export default defineComponent({
     const ticket = ref({
       user: '',
       company: '',
-      emailTo: '',  // Nome alterado para corresponder ao DTO do backend
+      emailTo: '',
       problem: '',
       description: '',
       priority: 'medium',
-      status: 'open',  // Defina o status inicial
-      subject: 'New Incident Ticket',  // Assumindo que o assunto seja fixo
-      emailFrom: 'support@dianaglobal.com',  // Endereço de envio fixo, ou pode ser dinâmico
-      text: '',  // Campo para o corpo do email (será gerado no backend)
     });
 
     const handleSubmit = async () => {
@@ -91,7 +85,6 @@ export default defineComponent({
     };
 
     const validateForm = () => {
-      // Verifica se todos os campos obrigatórios estão preenchidos
       for (const key in ticket.value) {
         if (ticket.value[key as keyof typeof ticket.value] === '') {
           alert(`${key} is required`);
