@@ -31,7 +31,3 @@ graph TD;
     RabbitMQ-->Backend_Email_Service(Java_Spring);
     Backend_Email_Service-->Email_Service(Java_Mail_Sender);
     Email_Service-->Company_Email(Responsible_for_Maintenance);
-
-## License
-
-This project is licensed under the MIT License - see the LicenseMit
