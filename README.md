@@ -30,4 +30,4 @@ graph TD;
     RabbitMQ-->Backend_Email_Service(Email Backend - Microservice 2);
     Backend_Email_Service-->MongoDB;
     Backend_Email_Service-->Email_Service(Java Mail Sender);
-    Email_Service-->Company_Email(Responsible for Maintenance);
+    Email_Service-->Company_Email(Company Responsible for Maintenance);
