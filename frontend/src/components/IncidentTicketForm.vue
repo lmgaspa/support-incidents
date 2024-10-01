@@ -60,7 +60,7 @@ export default defineComponent({
     const handleSubmit = async () => {
       if (validateForm()) {
         try {
-          const response = await fetch('https://ticket-incident.herokuapp.com/send-ticket', {
+          const response = await fetch('https://ticket-incident-c2e003548875.herokuapp.com/send-ticket', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
