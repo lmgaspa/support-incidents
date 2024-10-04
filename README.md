@@ -2,6 +2,10 @@
 
 The **Support Incidents** system is designed to manage support tickets efficiently by allowing users to create, track, and resolve issues. The system follows a microservices architecture, with two separate backends working together to handle tickets and email notifications seamlessly.
 
+## License
+
+This project is licensed under the MIT License - see the LICENSE.mit for details.
+
 ## Key Features
 
 - **Microservices Architecture**: Two distinct backend services.
