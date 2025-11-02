@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="c1ebee90-a0d7-4ccf-9835-0e569ac044a5" name="Changes" comment="fix new app&#10;heroku&#10;microservices2add">
+      <change beforePath="$PROJECT_DIR$/email-backend/src/main/java/com/dianaglobal/support/incidents/SupportIncidentsApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/email-backend/src/main/java/com/dianaglobal/support/incidents/SupportIncidentsApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/email-backend/src/main/java/com/dianaglobal/support/incidents/controllers/EmailController.java" beforeDir="false" afterPath="$PROJECT_DIR$/email-backend/src/main/java/com/dianaglobal/support/incidents/controllers/EmailController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ticket-backend/src/main/java/com/dianaglobal/tickets/controllers/TicketController.java" beforeDir="false" afterPath="$PROJECT_DIR$/ticket-backend/src/main/java/com/dianaglobal/tickets/controllers/TicketController.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/email-backend" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;lmgaspa&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/lmgaspa/support-incidents.git&quot;,
+    &quot;accountId&quot;: &quot;cf8fc7cc-ce8e-4622-a039-b2ae062ff921&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2qYxlx9An0ezi8F1SPa9neY6brb" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/luhmg/Desktop/Dev Profissional/Java/support incidents&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="c1ebee90-a0d7-4ccf-9835-0e569ac044a5" name="Changes" comment="" />
+      <created>1734853464468</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1734853464468</updated>
+    </task>
+    <task id="LOCAL-00001" summary="fix new app&#10;heroku&#10;microservices2add">
+      <option name="closed" value="true" />
+      <created>1734853642413</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1734853642413</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix new app&#10;heroku&#10;microservices2add">
+      <option name="closed" value="true" />
+      <created>1734853807279</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1734853807279</updated>
+    </task>
+    <task id="LOCAL-00003" summary="fix new app&#10;heroku&#10;microservices2add">
+      <option name="closed" value="true" />
+      <created>1734854248613</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1734854248613</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
+    <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="fix new app&#10;heroku&#10;microservices2add" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix new app&#10;heroku&#10;microservices2add" />
+  </component>
+</project>
