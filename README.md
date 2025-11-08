@@ -1,23 +1,32 @@
 # 💬 Support Incidents
 
-Esse projeto nasce de uma ideia simples: **quando alguém precisa de ajuda, o suporte tem que ser rápido, claro e humano.**  
-Aqui, o usuário abre um ticket pelo site → o sistema registra → uma mensagem é enviada → e o suporte recebe tudo por e-mail, bonitinho, organizado, sem esforço.
+This project starts from a simple idea: when someone needs help, support must be fast, clear, and human.
+Here, the user opens a ticket on the website → the system records it → a message is sent → and the support team receives everything by email, neat, organized, and effortless.
 
-É um fluxo pensado para ser **leve, direto e confiável**.
+It’s a flow designed to be lightweight, straightforward, and reliable.
 
 ---
 
-## 🧱 Como o sistema funciona
+# 🧩 Architecture
 
-1. O **usuário** abre um chamado no **Frontend** (Vue).
-2. O **ticket-backend** recebe e **envia a mensagem para o RabbitMQ** (fila `incident_queue`).
-3. O **email-backend** escuta essa fila, **envia o e-mail** e guarda os registros no **MongoDB**.
+Microservices design: independent services communicate via RabbitMQ.
 
-## 👤 Autor
+Back-end services (ticket-backend, email-backend) are built with Java 17.
+
+Frontend is Vue.
+
+## 🧱 How the system works
+
+1. The user opens a ticket on the Frontend (Vue).
+2. The ticket-backend receives it and sends the message to RabbitMQ (queue incident_queue).
+3. The email-backend listens to this queue, sends the email, and stores the records in MongoDB.
+
+
+## 👤 Author
 
 ### Luiz Gasparetto
 
-🌐 https://andescoresoftware.com.br  
+🌐 https://andescoresoftware.com.br
 📧 andescoresoftware@gmail.com
 
 
