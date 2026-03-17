@@ -2,6 +2,7 @@ package com.dianaglobal.tickets.controllers;
 
 import com.dianaglobal.tickets.dtos.EmailDto;
 import com.dianaglobal.tickets.dtos.TicketDto;
+import jakarta.validation.Valid;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,7 +18,7 @@ public class TicketController {
     private RabbitTemplate rabbitTemplate;
 
     @PostMapping("/send-ticket")
-    public ResponseEntity<String> sendTicket(@RequestBody TicketDto ticketDto) {
+    public ResponseEntity<String> sendTicket(@Valid @RequestBody TicketDto ticketDto) {
         EmailDto emailDto = new EmailDto();
         emailDto.setOwnerRef(ticketDto.getUser());
         emailDto.setCompany(ticketDto.getCompany());
