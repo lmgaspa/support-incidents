@@ -1,0 +1,23 @@
+services:
+  ticket-backend:
+    build:
+      context: .
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+
+  prometheus:
+    image: prom/prometheus:v2.54.1
+    depends_on:
+      - ticket-backend
+    env_file:
+      - .env
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --config.expand-env
+      - --storage.tsdb.path=/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    ports:
+      - "9090:9090"

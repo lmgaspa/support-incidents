@@ -22,11 +22,10 @@ class TicketControllerTest {
     @Mock
     private RabbitTemplate rabbitTemplate;
 
-    @InjectMocks
-    private TicketController ticketController;
-
     @Test
     void sendTicketMapsPayloadAndPublishesMessage() {
+        TicketController ticketController = new TicketController(rabbitTemplate, "incident_queue");
+
         TicketDto ticketDto = new TicketDto();
         ticketDto.setUser("Diana");
         ticketDto.setCompany("Global Corp");
@@ -51,6 +50,6 @@ class TicketControllerTest {
         assertThat(emailDto.getSubject()).isEqualTo("Support Ticket: " + ticketDto.getProblem());
         assertThat(emailDto.getText()).isEqualTo(ticketDto.getDescription());
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(response.getBody()).isEqualTo("Ticket information sent to RabbitMQ");
+        assertThat(response.getBody()).isEqualTo("Ticket published to RabbitMQ for backend2 processing");
     }
 }

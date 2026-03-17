@@ -13,8 +13,6 @@ Microservices design: independent services communicate via RabbitMQ.
 
 Back-end services (ticket-backend, email-backend) are built with Java 17.
 
-#JUNIT, MOCKITO, GitHub Actions (CI/CD)
-
 Frontend is Vue.
 
 ## 🧱 How the system works
