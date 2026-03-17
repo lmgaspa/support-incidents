@@ -3,17 +3,19 @@ package com.dianaglobal.support.incidents.consumers;
 import com.dianaglobal.support.incidents.dtos.EmailDto;
 import com.dianaglobal.support.incidents.models.EmailModel;
 import com.dianaglobal.support.incidents.services.EmailService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.annotation.EnableRabbit;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Component;
 
 @Component
 @EnableRabbit
-@RequiredArgsConstructor
 public class EmailConsumer {
 
     private final EmailService emailService;
+
+    public EmailConsumer(EmailService emailService) {
+        this.emailService = emailService;
+    }
 
     @RabbitListener(queues = "${spring.rabbitmq.queue}", containerFactory = "rabbitListenerContainerFactory")
     public void onMessage(EmailDto dto) {
