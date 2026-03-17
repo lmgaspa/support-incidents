@@ -1,115 +1,228 @@
 # 💬 Support Incidents
 
-A lightweight microservices-based support incident platform built to keep ticket handling fast, clear, and reliable.
+A microservices-based support incident platform designed for reliable incident intake, asynchronous processing, traceability, and operational visibility.
 
-The idea is simple: when someone asks for help, support should feel effortless.
-
-A user opens a ticket on the website, the system records the request, publishes it to RabbitMQ, and the support team receives everything by email in a clean and organized flow.
+The platform handles the full support flow from ticket submission to email delivery through decoupled services connected by RabbitMQ. It also provides observability with metrics, traces, and structured logs, along with automated validation through tests and CI/CD pipelines.
 
 ---
 
 ## ✨ Overview
 
-This project follows a lightweight microservices architecture where each service has a clear responsibility:
+The system is composed of independent services, each with a single responsibility:
 
-- **Frontend (Vue)**: collects support incidents from users
-- **ticket-backend**: receives incidents and publishes them to RabbitMQ
-- **email-backend**: consumes the queue, sends emails, and stores delivery records in MongoDB
+- **Frontend (Vue):** collects support incidents from users
+- **ticket-backend:** receives incident requests and publishes messages to RabbitMQ
+- **email-backend:** consumes messages, sends support emails, and persists both **ticket data** and **email delivery records** in MongoDB
 
-This separation keeps the flow simple, scalable, and easy to maintain.
+This design keeps the workflow loosely coupled, easier to evolve, and more resilient than a synchronous end-to-end flow.
 
 ---
 
 ## 🧩 Architecture
 
-The system is built with **independent microservices** communicating asynchronously through **RabbitMQ**.
+The platform follows an event-driven microservices architecture.
 
-### 🛠 Tech Stack
+### 🧱 Core Flow
 
+1. A user submits a support incident through the **Vue frontend**
+2. The **ticket-backend** validates and receives the request
+3. The incident is published to RabbitMQ on the `incident_queue`
+4. The **email-backend** consumes the message asynchronously
+5. The email is sent to the support team
+6. Both **ticket data** and **email delivery records** are persisted in **MongoDB**
+
+This architecture separates intake from delivery, reduces coupling between services, and improves maintainability and operational clarity.
+
+---
+
+## 🛠 Technology Stack
+
+### Backend
 - **Java 17**
 - **Spring Boot**
+
+### Frontend
 - **Vue**
+
+### Messaging
 - **RabbitMQ**
+
+### Persistence
 - **MongoDB**
+
+### Observability
 - **Spring Boot Actuator**
 - **Micrometer**
 - **Prometheus**
 - **Grafana Cloud**
 - **OpenTelemetry**
 
----
-
-## 🧱 How It Works
-
-1. The user opens a support incident on the **Vue frontend**
-2. The **ticket-backend** receives the request
-3. The incident is published to **RabbitMQ** on the `incident_queue`
-4. The **email-backend** consumes the message
-5. The email is sent to the support team
-6. The delivery record is stored in **MongoDB**
+### Quality Engineering
+- **JUnit**
+- **Mockito**
+- **GitHub Actions**
 
 ---
 
-# 🎫 ticket-backend
+## ✅ Engineering Practices
 
-The `ticket-backend` is the entry point for support incident intake.
+Both backend services were developed with emphasis on code quality, maintainability, and delivery confidence.
 
-It is responsible for:
+### Automated Testing
+- unit tests implemented with **JUnit**
+- dependency isolation and mocking with **Mockito**
+- test coverage applied across both backends
 
-- receiving the support request
-- publishing the incident to RabbitMQ
-- exposing metrics and traces for observability
+### CI/CD
+- **GitHub Actions** configured for both backend services
+- automated build and test execution on push and pull request
+- continuous integration pipelines to improve delivery confidence and prevent regressions
 
-> Email delivery does **not** happen here.  
-> `email-backend` is responsible for consuming the queue and sending the email.
+These practices help keep the services production-oriented and easier to evolve over time.
+
+---
+
+## 🎫 ticket-backend
+
+The `ticket-backend` is responsible for the incident intake layer.
+
+Its responsibilities include:
+
+- receiving support incident requests
+- validating incoming payloads
+- publishing messages to RabbitMQ
+- exposing metrics and traces for operational monitoring
+
+It does **not** send emails or persist final operational records.
+
+Those responsibilities belong to the `email-backend`, which consumes the queue, performs email delivery, and persists both **ticket data** and **email records** in MongoDB.
+
+---
+
+## 📡 Main Endpoints
+
+- `POST /send-ticket` — submits a new support incident
+- `GET /actuator/health` — application health endpoint
+- `GET /actuator/prometheus` — Prometheus metrics endpoint
+- `GET /swagger-ui.html` — Swagger UI
 
 ---
 
 ## 🔭 Observability
 
-This service includes a minimal and practical observability setup.
+The platform includes an observability layer designed to improve runtime visibility, incident diagnostics, and operational confidence.
 
 ### Metrics
-- **Spring Boot Actuator**
-- **Micrometer**
-- **Prometheus**
-- **Grafana Cloud**
 
-### Traces
-- **Micrometer Tracing**
-- **OTLP**
-- **Grafana Cloud Tempo**
+Application metrics are exposed through **Spring Boot Actuator** and **Micrometer**, then scraped by **Prometheus** and visualized in **Grafana Cloud**.
 
-### Logs
-- **Logback JSON logs** on the console
-- correlation with `traceId` and `spanId`
+The metrics layer focuses on operational signals such as:
 
-### Not Used
-This project does **not** use:
+- service availability
+- request throughput
+- latency percentiles
+- error rate distribution
+- JVM health
+- thread utilization
+- CPU and garbage collection behavior
 
-- Grafana Alloy
-- Loki
-- Jaeger
+### Distributed Tracing
+
+Tracing is instrumented with **Micrometer Tracing** and exported through **OTLP** to **Grafana Cloud Tempo**.
+
+This allows the request path to be followed across the service lifecycle, improving the ability to investigate latency, processing bottlenecks, and failure scenarios.
+
+### Structured Logging
+
+Application logs are emitted in structured JSON format through **Logback**.
+
+Each log entry is enriched with:
+
+- `traceId`
+- `spanId`
+
+This enables correlation between logs and traces, making troubleshooting more precise and improving operational traceability.
+
+### 🌍 Public Observability Dashboard
+
+The project also includes a public Grafana Cloud dashboard for live observability visualization:
+
+[View Public Grafana Cloud Dashboard](https://lmgaspa.grafana.net/public-dashboards/37dc483d55ba4abf8bbb0f9419dde5ac)
 
 ---
 
-## 🔐 Environment Variables
+## 📊 Dashboard Coverage
 
-Main environment variables used by the service:
+The dashboard provides visibility into key runtime and application-level indicators, including:
 
-- `RABBITMQ_URL` — RabbitMQ connection URL
-- `RABBITMQ_QUEUE` — queue used to publish incidents
-- `GRAFANA_OTLP_TRACES_ENDPOINT` — Grafana Cloud OTLP HTTP endpoint
-- `GRAFANA_OTLP_AUTHORIZATION` — `Authorization` header in the format `Basic <base64(instance_id:token)>`
-- `GRAFANA_CLOUD_PROMETHEUS_REMOTE_WRITE_URL` — Grafana Cloud `remote_write` endpoint
-- `GRAFANA_CLOUD_PROMETHEUS_USER` — Grafana Cloud Prometheus instance ID
-- `GRAFANA_CLOUD_PROMETHEUS_API_KEY` — token with permission to write metrics
+- service availability
+- request throughput
+- p95 HTTP latency
+- p99 HTTP latency
+- 4xx error rate
+- 5xx error rate
+- request rate by endpoint
+- latency by endpoint with p50, p95, and p99
+- JVM memory consumption
+- JVM thread activity
+- Tomcat busy threads
+- CPU usage
+- garbage collection activity
+- application uptime
 
 ---
 
-## ▶️ Running the Application
+## 🗄 Persistence Model
 
-Run locally with:
+Operational data is persisted in **MongoDB** to preserve traceability throughout the support workflow.
 
-```bash
-./mvnw spring-boot:run
+Persisted records include:
+
+- ticket payloads
+- email delivery records
+- processing history associated with support operations
+
+This persistence strategy improves:
+
+- auditability
+- troubleshooting
+- historical analysis
+- operational transparency
+
+---
+
+## 🚀 Architectural Characteristics
+
+This project was designed around a set of practical engineering decisions:
+
+- **asynchronous communication** through RabbitMQ to decouple intake from email delivery
+- **clear service boundaries** to keep each backend focused on a single responsibility
+- **observability-first backend design** to improve diagnostics and operational insight
+- **persistent operational records** in MongoDB to support traceability and auditing
+- **automated validation** through tests and CI/CD to improve delivery reliability
+
+Together, these choices produce a platform that is easier to evolve, easier to monitor, and more resilient than a tightly coupled synchronous workflow.
+
+---
+
+## ⭐ Why This Project Stands Out
+
+This repository demonstrates practical experience with:
+
+- event-driven microservices architecture
+- asynchronous backend processing
+- ticket and email record persistence in MongoDB
+- service boundary design and separation of concerns
+- automated testing with JUnit and Mockito
+- CI/CD pipelines with GitHub Actions
+- observability with metrics, traces, and structured logs
+- production-style monitoring with Grafana Cloud
+
+---
+
+## 👤 Author
+
+**Luiz Gasparetto**
+
+- Website: [andescoresoftware.com.br](https://andescoresoftware.com.br)
+- Email: [andescoresoftware@gmail.com](mailto:andescoresoftware@gmail.com)
